@@ -1,0 +1,450 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+}
+
+body {
+    background: #0a0e14;
+    color: #e2e8f0;
+    line-height: 1.5;
+    scroll-behavior: smooth;
+}
+
+/* Жёсткая текстура - шум без размытия */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" opacity="0.03"><filter id="a"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2"/></filter><rect width="100%" height="100%" filter="url(%23a)"/></svg>');
+    background-repeat: repeat;
+    background-size: 200px 200px;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Шапка - с жёсткой нижней границей */
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: #0f141c;
+    border-bottom: 2px solid #2a3342;
+    padding: 1rem 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.logo h1 {
+    font-size: 1.7rem;
+    font-weight: 600;
+    color: #e2e8f0;
+    letter-spacing: -0.3px;
+}
+
+.logo span {
+    font-size: 0.7rem;
+    color: #6a7c94;
+}
+
+.search-bar {
+    display: flex;
+    gap: 0.5rem;
+    background: #1a212c;
+    border-radius: 0px;
+    padding: 0.2rem 0.2rem 0.2rem 1.2rem;
+    border: 1px solid #3a4560;
+}
+
+.search-bar:focus-within {
+    border-color: #6a8db0;
+}
+
+.search-bar input {
+    background: transparent;
+    border: none;
+    padding: 0.7rem 0;
+    font-size: 0.9rem;
+    color: #e2e8f0;
+    outline: none;
+    min-width: 200px;
+}
+
+.search-bar input::placeholder {
+    color: #5a6a80;
+}
+
+.search-bar button {
+    background: #2a3548;
+    border: none;
+    padding: 0.6rem 1.5rem;
+    color: #e2e8f0;
+    font-weight: 500;
+    cursor: pointer;
+    transition: 0.2s;
+    border-left: 1px solid #3a4560;
+}
+
+.search-bar button:hover {
+    background: #3a4560;
+}
+
+/* Фильтры - кнопки с чёткими границами */
+.filters {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.6rem;
+    margin: 1.5rem 1rem;
+}
+
+.filter-btn {
+    background: #1a212c;
+    border: 1px solid #3a4560;
+    padding: 0.5rem 1.2rem;
+    border-radius: 0px;
+    font-weight: 500;
+    font-size: 0.85rem;
+    color: #b8c4d8;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.filter-btn.active {
+    background: #3a4a60;
+    border-color: #6a8db0;
+    color: white;
+}
+
+.filter-btn:hover {
+    background: #2a3548;
+    border-color: #5a6a8a;
+    color: #e2e8f0;
+}
+
+/* Сетка карточек */
+.movies-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.8rem;
+    padding: 1.5rem;
+    max-width: 1300px;
+    margin: 0 auto;
+}
+
+/* Карточка фильма - жёсткая рамка, без скруглений */
+.movie-card {
+    width: 200px;
+    background: #12171f;
+    overflow: hidden;
+    transition: 0.2s ease;
+    cursor: pointer;
+    border: 1px solid #3a4560;
+}
+
+.movie-card:hover {
+    transform: translateY(-3px);
+    border-color: #6a8db0;
+    background: #161e28;
+}
+
+.movie-img {
+    width: 100%;
+    aspect-ratio: 2 / 3;
+    object-fit: cover;
+    display: block;
+    border-bottom: 1px solid #2a3342;
+}
+
+.movie-info {
+    padding: 0.8rem;
+    text-align: left;
+}
+
+.movie-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #e2e8f0;
+}
+
+.movie-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0.3rem 0;
+    font-size: 0.7rem;
+    color: #8a9abb;
+}
+
+.year, .rating {
+    background: #1a2532;
+    padding: 0.15rem 0.5rem;
+    border: 1px solid #2a3548;
+}
+
+.rating::before {
+    content: "★";
+    margin-right: 3px;
+    color: #8aadf4;
+}
+
+.genre {
+    display: none;
+}
+
+.no-results {
+    text-align: center;
+    padding: 3rem;
+    font-size: 1rem;
+    color: #8a9abb;
+    background: #12171f;
+    border: 1px solid #3a4560;
+    width: 100%;
+}
+
+/* Модальное окно - жёсткие границы */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.modal.active {
+    display: flex;
+    animation: fadeIn 0.15s ease;
+}
+
+.modal-content {
+    background: #12171f;
+    max-width: 700px;
+    width: 100%;
+    overflow: hidden;
+    border: 2px solid #3a4560;
+    display: flex;
+    flex-direction: column;
+    max-height: 85vh;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    background: #0f141c;
+    border-bottom: 2px solid #2a3342;
+}
+
+.modal-header h2 {
+    font-size: 1.5rem;
+    color: #e2e8f0;
+    font-weight: 600;
+}
+
+.close-modal {
+    background: none;
+    border: 1px solid #3a4560;
+    font-size: 1.4rem;
+    cursor: pointer;
+    color: #8a9abb;
+    transition: 0.1s;
+    padding: 0;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.close-modal:hover {
+    color: #e2e8f0;
+    background: #2a3548;
+    border-color: #6a8db0;
+}
+
+.modal-body {
+    padding: 1.5rem;
+    overflow-y: auto;
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.modal-poster {
+    width: 35%;
+    min-width: 150px;
+    max-width: 200px;
+    height: auto;
+    object-fit: cover;
+    border: 1px solid #2a3342;
+}
+
+.modal-details {
+    flex: 1;
+    min-width: 200px;
+}
+
+.modal-details p {
+    margin: 0.7rem 0;
+    line-height: 1.5;
+    color: #c9d4e6;
+    font-size: 0.95rem;
+}
+
+.modal-details strong {
+    color: #8aadf4;
+    font-weight: 600;
+    display: inline-block;
+    min-width: 70px;
+}
+
+.modal-details hr {
+    margin: 1rem 0;
+    border: none;
+    border-top: 1px solid #2a3342;
+}
+
+/* Футер - жёсткие границы */
+footer {
+    background: #0f141c;
+    margin-top: 2rem;
+    border-top: 2px solid #2a3342;
+}
+
+.footer-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 2rem 1.5rem 2rem;
+    gap: 2rem;
+}
+
+.footer-section {
+    flex: 1;
+    min-width: 170px;
+}
+
+.footer-section h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.7rem;
+    color: #e2e8f0;
+    font-weight: 600;
+    padding-bottom: 0.3rem;
+    border-bottom: 1px solid #3a4560;
+    display: inline-block;
+}
+
+.footer-section h4 {
+    font-size: 0.9rem;
+    margin-bottom: 0.7rem;
+    color: #8a9abb;
+    font-weight: 500;
+    padding-bottom: 0.2rem;
+    border-bottom: 1px solid #2a3342;
+    display: inline-block;
+}
+
+.footer-section p {
+    font-size: 0.8rem;
+    color: #8a9abb;
+    margin-bottom: 0.4rem;
+}
+
+.footer-section ul {
+    list-style: none;
+}
+
+.footer-section ul li {
+    margin-bottom: 0.4rem;
+    font-size: 0.8rem;
+    color: #8a9abb;
+}
+
+.footer-bottom {
+    text-align: center;
+    padding: 1rem;
+    border-top: 1px solid #1a2532;
+    font-size: 0.7rem;
+    color: #6a7c94;
+}
+
+/* Адаптив */
+@media (max-width: 650px) {
+    .header {
+        flex-direction: column;
+        text-align: center;
+        padding: 1rem;
+    }
+    .movie-card {
+        width: 160px;
+    }
+    .movie-title {
+        font-size: 0.8rem;
+    }
+    .filter-btn {
+        padding: 0.4rem 1rem;
+        font-size: 0.75rem;
+    }
+    .search-bar input {
+        min-width: 130px;
+    }
+    .modal {
+        padding: 1rem;
+    }
+    .modal-content {
+        max-width: 95%;
+    }
+    .modal-header h2 {
+        font-size: 1.2rem;
+    }
+    .modal-body {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 1rem;
+        gap: 1rem;
+    }
+    .modal-poster {
+        width: 50%;
+        max-width: 160px;
+    }
+    .modal-details {
+        text-align: left;
+        width: 100%;
+    }
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+    .footer-section h3, .footer-section h4 {
+        display: block;
+        text-align: center;
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}

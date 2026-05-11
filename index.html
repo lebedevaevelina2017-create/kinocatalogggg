@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>КиноКаталог</title>
+    <link rel="stylesheet" href="kinocatalogggg.css"> 
+</head>
+<body>
+
+<header class="header">
+    <div class="logo">
+        <h1>КиноКаталог</h1>
+        <span>уголок кино</span>
+    </div>
+    <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Поиск по названию...">
+        <button id="searchBtn">Найти</button>
+    </div>
+</header>
+
+<div class="filters" id="filterContainer">
+    <button class="filter-btn active" data-genre="all">Все фильмы</button>
+    <button class="filter-btn" data-genre="боевик">Боевик</button>
+    <button class="filter-btn" data-genre="фантастика">Фантастика</button>
+    <button class="filter-btn" data-genre="драма">Драма</button>
+    <button class="filter-btn" data-genre="комедия">Комедия</button>
+    <button class="filter-btn" data-genre="триллер">Триллер</button>
+    <button class="filter-btn" data-genre="криминал">Криминал</button>
+</div>
+
+<div class="movies-grid" id="moviesGrid">
+    <!-- Сюда будут загружены карточки -->
+</div>
+
+<footer class="footer">
+    <div class="footer-content">
+        <div class="footer-section">
+            <h3>КиноКаталог</h3>
+            <p>Твой персональный гид в мире кино.</p>
+            <p class="stats" id="footerStats">Фильмов в каталоге: <span id="totalCount">0</span></p>
+        </div>
+        <div class="footer-section">
+            <h4>О проекте</h4>
+            <ul>
+                <li> Все фильмы собраны вручную</li>
+                <li>Рейтинг основан на отзывах</li>
+                <li>Фильтры по жанрам работают</li>
+                <li>Поиск по названию</li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Контакты</h4>
+            <ul>
+                <li>info@kinocatalog.ru</li>
+                <li>По вопросам сотрудничества</li>
+                <li><span id="topGenre">—</span> — самый популярный жанр</li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>Интересное</h4>
+            <ul>
+                <li>Самый старый фильм: <span id="oldestMovie">—</span></li>
+                <li>Самый новый: <span id="newestMovie">—</span></li>
+                <li>Лучший рейтинг: <span id="topRated">—</span></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>© 2025 КиноКаталог | Все фильмы в одном месте</p>
+        <p>Используйте фильтры вверху страницы или поиск</p>
+    </div>
+</footer>
+
+<div id="movieModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 id="modalTitle">Название фильма</h2>
+            <button class="close-modal" id="closeModalBtn">&times;</button>
+        </div>
+        <div class="modal-body">
+            <img id="modalPoster" class="modal-poster" src="" alt="постер">
+            <div class="modal-details" id="modalDetails"></div>
+        </div>
+    </div>
+</div>
+<script src="kinocatalogggg.js"></script>
+</body>
+</html>
